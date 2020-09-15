@@ -1,11 +1,12 @@
 
 $(document).ready(function() {
-
-    
-
+    //When input button is clicked, display forecast
     $("button").on("click", function() {
+
+
         event.preventDefault();
         //empty out last search
+        $(".weatherNow").empty();
         var city = $("#city").val();
         console.log(city);
     
@@ -18,7 +19,7 @@ $(document).ready(function() {
         method: "GET"
         }).then(function(response) {
             console.log(response);
-            
+            //Show current weather
             var cityName = response.name
             var appendName = $("<h3>")
             appendName.text(cityName + " (" + moment().format("MMM Do YY" + ")"))
@@ -42,14 +43,16 @@ $(document).ready(function() {
             var lat = response.coord.lat
             var lon = response.coord.lon
             //console.log(response.weather.icon)
-            var queryUV = "https://api.openweathermap.org/data/2.5/uvi/forecast?&units=imperial&appid=4983d208fd371cf8ba56cd03550e6ec5&q=&lat=" + lat + "&lon=" + lon
             
+            var queryUV = "https://api.openweathermap.org/data/2.5/onecall?&appid=4983d208fd371cf8ba56cd03550e6ec5&q=&lat=" + lat + "&lon=" + lon
+            
+            //Second ajax call for UV index & 5 day forecast
             $.ajax({
             url: queryUV,
             method: "GET"
             }).then(function(uv) {
-            
-            var uvIndex = uv[0].value
+            console.log(uv)
+            var uvIndex = uv.current.uvi
             var appendUV = $("<button>")
             var uvText = $("<p>")
             uvText.text("UV Index: ")
@@ -71,6 +74,30 @@ $(document).ready(function() {
             }
             if (uvIndex >= 11) {
                 appendUV.addClass("extreme")
+            }
+
+            //Loop for 5 day forecast. THESE NEED TO BE IN COLUMNS
+            for (var i = 1; i <= 5; i++) {
+                //console.log(uv.daily[i].temp.max)
+                var k = uv.daily[i].temp.max
+                var fiveTemp = Math.floor((k - 273.15) * 1.80 + 32)
+                //console.log(fiveTemp)
+                var fiveDiv = $("<div class='card'>")
+                $(".weatherNow").append(fiveDiv)
+
+                var appendDate = $("<p>")
+                appendDate.text(moment().add([i], "days").format("MMM Do YY"))
+                fiveDiv.append(appendDate)
+
+                var appendFiveTemp = $("<p>")
+                appendFiveTemp.text("Temp: " + fiveTemp + "°F")
+                fiveDiv.append(appendFiveTemp)
+                
+
+                var fiveHumidity = uv.daily[i].humidity
+                var appendFiveHum = $("<p>")
+                appendFiveHum.text("Humidity" + fiveHumidity + "%")
+                fiveDiv.append(appendFiveHum)
             }
             })
         })
