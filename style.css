@@ -1,0 +1,29 @@
+/*.sidebar {
+    
+    
+}*/
+
+h3 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.low {
+    background-color: green;
+}
+
+.mod {
+    background-color: yellow;
+}
+
+.high { 
+    background-color: orange;
+}
+
+.vhigh {
+    background-color: red;
+}
+
+.extreme {
+    background-color: purple;
+}
