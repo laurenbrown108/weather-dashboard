@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
     //When input button is clicked, display forecast
     $("button").on("click", function() {
@@ -48,6 +47,9 @@ $(document).ready(function() {
             icon.attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
             $(".weatherNow").append(icon)
 
+            cityEntry = $("<li>")
+            cityEntry.text(cityName)
+            $(".list-group").append(cityEntry)
             
             var queryUV = "https://api.openweathermap.org/data/2.5/onecall?&appid=4983d208fd371cf8ba56cd03550e6ec5&q=&lat=" + lat + "&lon=" + lon
             
@@ -81,10 +83,9 @@ $(document).ready(function() {
             if (uvIndex >= 11) {
                 appendUV.addClass("extreme")
             }
-
+            
             //Loop for 5 day forecast.
-            for (var i = 1; i <= 5; i++) {
-                
+            for (i = 1; i <= 5; i++) {
                 //console.log(uv.daily[i].temp.max)
                 
                 var k = uv.daily[i].temp.max
@@ -109,12 +110,10 @@ $(document).ready(function() {
 
                 var fiveHumidity = uv.daily[i].humidity
                 var appendFiveHum = $("<p>")
-                appendFiveHum.text("Humidity" + fiveHumidity + " %")
+                appendFiveHum.text("Humidity: " + fiveHumidity + " %")
                 fiveDiv.append(appendFiveHum)
             }
             })
         })
-        
-
     })
 })
