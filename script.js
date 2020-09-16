@@ -8,12 +8,12 @@ $(document).ready(function() {
         $(".weatherNow").empty();
         
         var city = $("#city").val();
-        console.log(city);
-    
+        
+        //API URL for current weather data
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?&units=imperial&appid=4983d208fd371cf8ba56cd03550e6ec5&q=" + city;
         
         //console.log(queryURL);
-
+        //call API current weather
         $.ajax({
         url: queryURL,
         method: "GET"
@@ -46,7 +46,7 @@ $(document).ready(function() {
             var icon = $("<img>")
             icon.attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
             $(".weatherNow").append(icon)
-
+            //Display recent search in sidebar
             cityEntry = $("<li>")
             cityEntry.text(cityName)
             $(".list-group").append(cityEntry)
@@ -67,7 +67,7 @@ $(document).ready(function() {
             appendUV.text(uvIndex)
             uvText.append(appendUV)
             $(".weatherNow").append(uvText)
-            
+            //Color coding UV buttons
             if (uvIndex <= 2) {
                 appendUV.addClass("low")
             }
@@ -86,12 +86,13 @@ $(document).ready(function() {
             
             //Loop for 5 day forecast.
             for (i = 1; i <= 5; i++) {
+                
                 //console.log(uv.daily[i].temp.max)
                 
                 var k = uv.daily[i].temp.max
                 var fiveTemp = Math.floor((k - 273.15) * 1.80 + 32)
                 //console.log(fiveTemp)
-                
+                //Displaying five day forecast
                 var fiveDiv = $("<div class='card'>")
                 $("#5day" + [i]).append(fiveDiv)
 
