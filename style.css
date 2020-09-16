@@ -1,6 +1,9 @@
-/*.sidebar {
-    
-    
+/*.flex-container {
+    /*display: left;*/
+    /*flex-direction: row;*/
+/*}
+/*nav {
+    justify-content: center;
 }*/
 
 h3 {
@@ -26,4 +29,13 @@ h3 {
 
 .extreme {
     background-color: purple;
+}
+
+.card {
+    background-color: cornflowerblue;
+    color: white;
+    margin-right: -10px;
+    margin-left: -10px;
+    margin-bottom: 10px;
+    
 }

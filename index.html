@@ -12,9 +12,9 @@
         <span class="navbar-brand mb-0 h1">Weather for Wherever</span>
     </nav>
 
-    <main class="container">
+    <main class="flex-container">
         <div class="row">
-            <div class="col-sm-3 mt-3 sidebar">
+            <div class="col-sm-2 mt-3 sidebar">
                 <div class="input-group mb-3">
                     <input id="city" type="text" class="form-control" placeholder="City Name" aria-label="Search" aria-describedby="button-addon2">
                     <div class="input-group-append">
@@ -29,14 +29,18 @@
                     <li class="list-group-item">Vestibulum at eros</li>
                   </ul>
             </div>
-            <div class="col-sm-8">
-                <div class="row">
+            <div class="col-sm-10">
+                <div class="row" id="forecast">
                     <div class="weatherNow">
                     
                     </div>
                 </div>
-                <div class="row">
-                    <div class="5dayWeather"> 
+                <div class="row 5dayWeather">
+                    <div class="col-2" id="5day1">  </div>
+                    <div class="col-2" id="5day2"> </div>
+                    <div class="col-2" id="5day3"> </div>
+                    <div class="col-2" id="5day4"> </div>
+                    <div class="col-2" id="5day5"> </div>
                     </div>
                 </div>
 

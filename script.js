@@ -7,6 +7,7 @@ $(document).ready(function() {
         event.preventDefault();
         //empty out last search
         $(".weatherNow").empty();
+        
         var city = $("#city").val();
         console.log(city);
     
@@ -42,11 +43,16 @@ $(document).ready(function() {
             console.log(response.coord.lat)
             var lat = response.coord.lat
             var lon = response.coord.lon
-            //console.log(response.weather.icon)
+            //console.log(response.weather[0].icon)
+            var icon = $("<img>")
+            icon.attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
+            $(".weatherNow").append(icon)
+
             
             var queryUV = "https://api.openweathermap.org/data/2.5/onecall?&appid=4983d208fd371cf8ba56cd03550e6ec5&q=&lat=" + lat + "&lon=" + lon
             
             //Second ajax call for UV index & 5 day forecast
+            
             $.ajax({
             url: queryUV,
             method: "GET"
@@ -76,18 +82,25 @@ $(document).ready(function() {
                 appendUV.addClass("extreme")
             }
 
-            //Loop for 5 day forecast. THESE NEED TO BE IN COLUMNS
+            //Loop for 5 day forecast.
             for (var i = 1; i <= 5; i++) {
+                
                 //console.log(uv.daily[i].temp.max)
+                
                 var k = uv.daily[i].temp.max
                 var fiveTemp = Math.floor((k - 273.15) * 1.80 + 32)
                 //console.log(fiveTemp)
+                
                 var fiveDiv = $("<div class='card'>")
-                $(".weatherNow").append(fiveDiv)
+                $("#5day" + [i]).append(fiveDiv)
 
                 var appendDate = $("<p>")
                 appendDate.text(moment().add([i], "days").format("MMM Do YY"))
                 fiveDiv.append(appendDate)
+
+                var appendIcon = $("<img>")
+                appendIcon.attr("src", "https://openweathermap.org/img/w/" + uv.daily[i].weather[0].icon + ".png")
+                fiveDiv.append(appendIcon)
 
                 var appendFiveTemp = $("<p>")
                 appendFiveTemp.text("Temp: " + fiveTemp + "°F")
@@ -96,7 +109,7 @@ $(document).ready(function() {
 
                 var fiveHumidity = uv.daily[i].humidity
                 var appendFiveHum = $("<p>")
-                appendFiveHum.text("Humidity" + fiveHumidity + "%")
+                appendFiveHum.text("Humidity" + fiveHumidity + " %")
                 fiveDiv.append(appendFiveHum)
             }
             })
